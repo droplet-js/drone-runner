@@ -24,7 +24,7 @@ jobs:
         run: |
           # 60 - 1m
           # while true ; do sleep 60 ; echo "How are u ? " ; done
-          docker run --detach \
+          docker run \
             --volume=/var/run/docker.sock:/var/run/docker.sock \
             --env=DRONE_RPC_PROTO=${{ secrets.DRONE_RPC_PROTO }} \
             --env=DRONE_RPC_HOST=${{ secrets.DRONE_RPC_HOST }} \
