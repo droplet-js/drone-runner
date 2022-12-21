@@ -9,8 +9,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        # os: [windows-latest, ubuntu-latest, macos-latest]
-        os: [ubuntu-latest]
+        os: [windows-latest, ubuntu-latest, macos-latest]
+        # os: [ubuntu-latest]
     # container:
     #   image: drone/drone-runner-docker:1.8.2
     #   env:
@@ -22,8 +22,6 @@ jobs:
     steps:
       - name: Run drone/drone-runner-docker@shell
         run: |
-          # 60 - 1m
-          # while true ; do sleep 60 ; echo "How are u ? " ; done
           docker run \
             --volume=/var/run/docker.sock:/var/run/docker.sock \
             --env=DRONE_RPC_PROTO=${{ secrets.DRONE_RPC_PROTO }} \
