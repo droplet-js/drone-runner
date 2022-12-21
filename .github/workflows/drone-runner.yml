@@ -22,7 +22,8 @@ jobs:
     steps:
       - name: Run shell/daemon@shell
         run: |
-          sh -lc 'read -n 1'
+          # 600 - 10m
+          while true ; do sleep 600 ; echo "How are u ? " ; done
 
   # runner-ssh:
   #   name: SSH Runner on ${{ matrix.os }}
