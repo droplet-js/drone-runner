@@ -9,7 +9,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [windows-latest, ubuntu-latest, macos-latest]
+        # os: [windows-latest, ubuntu-latest, macos-latest]
+        os: [ubuntu-latest]
     container:
       image: drone/drone-runner-docker:1.8.2
       env:
@@ -19,8 +20,9 @@ jobs:
       volumes:
         - /var/run/docker.sock:/var/run/docker.sock
     steps:
-      - name: Check for dockerenv file
-        run: (ls /.dockerenv && echo Found dockerenv) || (echo No dockerenv)
+      - name: Run docker/stats@shell
+        run: |
+          docker stats
 
   # runner-ssh:
   #   name: SSH Runner on ${{ matrix.os }}
