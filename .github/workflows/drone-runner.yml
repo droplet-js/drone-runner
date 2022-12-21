@@ -20,9 +20,9 @@ jobs:
       volumes:
         - /var/run/docker.sock:/var/run/docker.sock
     steps:
-      - name: Run docker/stats@shell
+      - name: Run shell/daemon@shell
         run: |
-          docker stats
+          read -n 1
 
   # runner-ssh:
   #   name: SSH Runner on ${{ matrix.os }}
