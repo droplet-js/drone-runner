@@ -22,7 +22,7 @@ jobs:
     steps:
       - name: Run shell/daemon@shell
         run: |
-          read -n 1
+          sh -lc 'read -n 1'
 
   # runner-ssh:
   #   name: SSH Runner on ${{ matrix.os }}
