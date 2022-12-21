@@ -23,9 +23,7 @@ jobs:
       - name: Run shell/daemon@shell
         run: |
           # 60 - 1m
-          # while true ; do sleep 60 ; echo "How are u ? " ; done
-          ls /var/run/
-          /usr/bin/docker stats
+          while true ; do sleep 60 ; echo "How are u ? " ; done
 
   # runner-ssh:
   #   name: SSH Runner on ${{ matrix.os }}
