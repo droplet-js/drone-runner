@@ -1,0 +1,42 @@
+name: drone-runner
+
+on: [push, pull_request]
+
+jobs:
+  runner:
+    name: Docker Runner on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-latest, ubuntu-latest, macos-latest]
+    steps:
+      - uses: actions/checkout@v3
+
+  runner-ssh:
+    name: Docker Runner on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-latest, ubuntu-latest, macos-latest]
+    steps:
+      - uses: actions/checkout@v3
+
+  runner-exec:
+    name: Exec Runner on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-latest, ubuntu-latest, macos-latest]
+    steps:
+      - uses: actions/checkout@v3
+      - name: Run drone/drone-runner-exec@shell
+        run: |
+          curl -L https://github.com/drone-runners/drone-runner-exec/releases/latest/download/drone_runner_exec_darwin_amd64.tar.gz | tar zx
+          sudo cp drone-runner-exec /usr/local/bin
+          sudo mkdir -p ~/.drone-runner-exec
+          printf "DRONE_RPC_PROTO=${{ secrets.DRONE_RPC_PROTO }}\nDRONE_RPC_HOST=${{ secrets.DRONE_RPC_HOST }}\nDRONE_RPC_SECRET=${{ secrets.DRONE_RPC_SECRET }}" | sudo tee ~/.drone-runner-exec/config
+          drone-runner-exec service install
+          drone-runner-exec service start
