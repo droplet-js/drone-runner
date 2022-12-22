@@ -58,7 +58,7 @@ jobs:
           # RUNNER_ARCH X64
           curl -L https://github.com/drone-runners/drone-runner-exec/releases/latest/download/drone_runner_exec_windows_amd64.tar.gz -o drone_runner_exec_windows_amd64.tar.gz
           ls
-          tar zx .\drone_runner_exec_windows_amd64.tar.gz
+          tar -zxvf .\drone_runner_exec_windows_amd64.tar.gz
           ls
           mkdir C:\Drone
           mkdir C:\Drone\drone-runner-exec
