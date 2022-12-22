@@ -56,9 +56,13 @@ jobs:
         if: matrix.os == 'windows-latest'
         run: |
           # RUNNER_ARCH X64
-          curl -L https://github.com/drone-runners/drone-runner-exec/releases/latest/download/drone_runner_exec_windows_amd64.tar.gz | tar zx
-          # mkdir C:\Drone
-          # mkdir C:\Drone\drone-runner-exec
+          curl -L https://github.com/drone-runners/drone-runner-exec/releases/latest/download/drone_runner_exec_windows_amd64.tar.gz -o drone_runner_exec_windows_amd64.tar.gz
+          tar zx drone_runner_exec_windows_amd64.tar.gz
+          ls
+          mkdir C:\Drone
+          mkdir C:\Drone\drone-runner-exec
+          cp drone-runner-exec.exe C:\Drone\drone-runner-exec
+          ls C:\Drone\drone-runner-exec
       - name: Run drone/drone-runner-exec-linux-amd64@shell
         if: matrix.os == 'ubuntu-latest'
         run: |
