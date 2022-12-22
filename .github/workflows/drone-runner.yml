@@ -9,23 +9,9 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        # os: [windows-latest, ubuntu-latest, macos-latest]
-        os: [ubuntu-latest, macos-latest]
+        os: [ubuntu-latest]
     steps:
-      # - uses: docker-practice/actions-setup-docker@master
       - name: Run drone/drone-runner-docker@shell
-        if: ${{ matrix.os == 'macos-latest' }}
-        run: |
-          /usr/local/bin/docker run \
-            --volume=/var/run/docker.sock:/var/run/docker.sock \
-            --env=DRONE_RPC_PROTO=${{ secrets.DRONE_RPC_PROTO }} \
-            --env=DRONE_RPC_HOST=${{ secrets.DRONE_RPC_HOST }} \
-            --env=DRONE_RPC_SECRET=${{ secrets.DRONE_RPC_SECRET }} \
-            --restart=always \
-            --name=runner \
-            drone/drone-runner-docker:1.8.2
-      - name: Run drone/drone-runner-docker@shell
-        if: ${{ matrix.os == 'ubuntu-latest' }}
         run: |
           docker run \
             --volume=/var/run/docker.sock:/var/run/docker.sock \
@@ -35,6 +21,20 @@ jobs:
             --restart=always \
             --name=runner \
             drone/drone-runner-docker:1.8.2
+
+  runner-in-docker:
+    name: Docker Runner In Docker on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-latest, ubuntu-latest, macos-latest]
+    container:
+      image: docker:latest
+    steps:
+      - name: Run drone/drone-runner-docker@shell
+        run: |
+          docker
 
   # runner-ssh:
   #   name: SSH Runner on ${{ matrix.os }}
