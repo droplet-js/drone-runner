@@ -12,7 +12,7 @@ jobs:
         # os: [windows-latest, ubuntu-latest, macos-latest]
         os: [ubuntu-latest, macos-latest]
     steps:
-      - uses: docker-practice/actions-setup-docker@master
+      # - uses: docker-practice/actions-setup-docker@master
       - name: Run docker/setup@shell
         if: ${{ matrix.os == 'macos-latest' }}
         run: |
