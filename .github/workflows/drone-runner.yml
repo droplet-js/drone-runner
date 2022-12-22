@@ -11,27 +11,23 @@ jobs:
       matrix:
         os: [windows-latest, ubuntu-latest, macos-latest]
         # os: [ubuntu-latest]
-    container: alpine:latest
-    #   image: drone/drone-runner-docker:1.8.2
-    #   env:
-    #     DRONE_RPC_PROTO: ${{ secrets.DRONE_RPC_PROTO }}
-    #     DRONE_RPC_HOST: ${{ secrets.DRONE_RPC_HOST }}
-    #     DRONE_RPC_SECRET: ${{ secrets.DRONE_RPC_SECRET }}
-    #   volumes:
-    #     - /var/run/docker.sock:/var/run/docker.sock
     steps:
+      - uses: docker/setup-qemu-action@v2
+      - uses: docker/setup-buildx-action@v2
       - name: Run drone/drone-runner-docker@shell
         run: |
-          ls /var/run/
           env
-          docker run \
-            --volume=/var/run/docker.sock:/var/run/docker.sock \
-            --env=DRONE_RPC_PROTO=${{ secrets.DRONE_RPC_PROTO }} \
-            --env=DRONE_RPC_HOST=${{ secrets.DRONE_RPC_HOST }} \
-            --env=DRONE_RPC_SECRET=${{ secrets.DRONE_RPC_SECRET }} \
-            --restart=always \
-            --name=runner \
-            drone/drone-runner-docker:1.8.2
+          docker
+      #     ls /var/run/
+      #     env
+      #     docker run \
+      #       --volume=/var/run/docker.sock:/var/run/docker.sock \
+      #       --env=DRONE_RPC_PROTO=${{ secrets.DRONE_RPC_PROTO }} \
+      #       --env=DRONE_RPC_HOST=${{ secrets.DRONE_RPC_HOST }} \
+      #       --env=DRONE_RPC_SECRET=${{ secrets.DRONE_RPC_SECRET }} \
+      #       --restart=always \
+      #       --name=runner \
+      #       drone/drone-runner-docker:1.8.2
 
   # runner-ssh:
   #   name: SSH Runner on ${{ matrix.os }}
