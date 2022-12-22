@@ -11,9 +11,12 @@ jobs:
       matrix:
         # os: [windows-latest, ubuntu-latest, macos-latest]
         os: [ubuntu-latest, macos-latest]
-        # os: [ubuntu-latest]
     steps:
       - uses: docker-practice/actions-setup-docker@master
+      - name: Run docker/setup@shell
+        if: ${{ matrix.os == 'macos-latest' }}
+        run: |
+          export alias docker='/usr/local/bin/docker'
       - name: Run drone/drone-runner-docker@shell
         run: |
           docker run \
