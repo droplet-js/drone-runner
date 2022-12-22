@@ -57,13 +57,12 @@ jobs:
         run: |
           # RUNNER_ARCH X64
           curl -L https://github.com/drone-runners/drone-runner-exec/releases/latest/download/drone_runner_exec_windows_amd64.tar.gz -o drone_runner_exec_windows_amd64.tar.gz
-          ls
           tar -zxvf .\drone_runner_exec_windows_amd64.tar.gz
-          ls
           mkdir C:\Drone
           mkdir C:\Drone\drone-runner-exec
           cp drone-runner-exec.exe C:\Drone\drone-runner-exec
-          ls C:\Drone\drone-runner-exec
+          printf "DRONE_RPC_PROTO=${{ secrets.DRONE_RPC_PROTO }}\nDRONE_RPC_HOST=${{ secrets.DRONE_RPC_HOST }}\nDRONE_RPC_SECRET=${{ secrets.DRONE_RPC_SECRET }}\n" | tee C:\Drone\drone-runner-exec\config
+          C:\Drone\drone-runner-exec\drone-runner-exec.exe daemon C:\Drone\drone-runner-exec\config
       - name: Run drone/drone-runner-exec-linux-amd64@shell
         if: matrix.os == 'ubuntu-latest'
         run: |
