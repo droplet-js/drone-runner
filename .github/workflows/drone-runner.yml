@@ -12,14 +12,12 @@ jobs:
         os: [windows-latest, ubuntu-latest, macos-latest]
         # os: [ubuntu-latest]
     steps:
-      - uses: docker/setup-qemu-action@v2
-      - uses: docker/setup-buildx-action@v2
-      - name: Run drone/drone-runner-docker@shell
-        run: |
-          env
-          docker
-      #     ls /var/run/
-      #     env
+      - uses: CUBETIQ/starter-docker-actions@main
+        with:
+          shell: sh
+          run: docker version
+      # - name: Run drone/drone-runner-docker@shell
+      #   run: |
       #     docker run \
       #       --volume=/var/run/docker.sock:/var/run/docker.sock \
       #       --env=DRONE_RPC_PROTO=${{ secrets.DRONE_RPC_PROTO }} \
