@@ -9,23 +9,21 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [windows-latest, ubuntu-latest, macos-latest]
+        # os: [windows-latest, ubuntu-latest, macos-latest]
+        os: [ubuntu-latest, macos-latest]
         # os: [ubuntu-latest]
     steps:
-      - uses: CUBETIQ/starter-docker-actions@main
-        with:
-          shell: sh
-          run: docker version
-      # - name: Run drone/drone-runner-docker@shell
-      #   run: |
-      #     docker run \
-      #       --volume=/var/run/docker.sock:/var/run/docker.sock \
-      #       --env=DRONE_RPC_PROTO=${{ secrets.DRONE_RPC_PROTO }} \
-      #       --env=DRONE_RPC_HOST=${{ secrets.DRONE_RPC_HOST }} \
-      #       --env=DRONE_RPC_SECRET=${{ secrets.DRONE_RPC_SECRET }} \
-      #       --restart=always \
-      #       --name=runner \
-      #       drone/drone-runner-docker:1.8.2
+      - uses: docker-practice/actions-setup-docker@master
+      - name: Run drone/drone-runner-docker@shell
+        run: |
+          docker run \
+            --volume=/var/run/docker.sock:/var/run/docker.sock \
+            --env=DRONE_RPC_PROTO=${{ secrets.DRONE_RPC_PROTO }} \
+            --env=DRONE_RPC_HOST=${{ secrets.DRONE_RPC_HOST }} \
+            --env=DRONE_RPC_SECRET=${{ secrets.DRONE_RPC_SECRET }} \
+            --restart=always \
+            --name=runner \
+            drone/drone-runner-docker:1.8.2
 
   # runner-ssh:
   #   name: SSH Runner on ${{ matrix.os }}
