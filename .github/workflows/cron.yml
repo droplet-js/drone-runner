@@ -1,4 +1,4 @@
-name: manually
+name: cron
 
 # [Events that trigger workflows](https://docs.github.com/zh/actions/using-workflows/events-that-trigger-workflows#workflow_run)
 #
