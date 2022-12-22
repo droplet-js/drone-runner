@@ -34,7 +34,7 @@ jobs:
     steps:
       - name: Run drone/drone-runner-docker@shell
         run: |
-          docker
+          ls
 
   # runner-ssh:
   #   name: SSH Runner on ${{ matrix.os }}
