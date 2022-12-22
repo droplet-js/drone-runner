@@ -52,16 +52,24 @@ jobs:
         os: [windows-latest, ubuntu-latest, macos-latest]
     steps:
       - uses: actions/checkout@v3
-      - name: Run drone/drone-runner-exec-windows-amd64@shell
-        if: matrix.os == 'windows-latest'
-        run: |
-          ls
-          env
-      - name: Run drone/drone-runner-exec-linux-amd64@shell
+      # - name: Run drone/drone-runner-exec-windows@shell
+      #   if: matrix.os == 'windows-latest'
+      #   run: |
+      #     # RUNNER_ARCH X64
+      #     // https://github.com/drone-runners/drone-runner-exec/releases/latest/download/drone_runner_exec_windows_amd64.tar.gz
+      #     mkdir C:\Drone
+      #     mkdir C:\Drone\drone-runner-exec
+      - name: Run drone/drone-runner-exec-linux@shell
         if: matrix.os == 'ubuntu-latest'
         run: |
-          ls
-          env
+          # RUNNER_ARCH X64
+          curl -L https://github.com/drone-runners/drone-runner-exec/releases/latest/download/drone_runner_exec_linux_amd64.tar.gz | tar zx
+          sudo install -t /usr/local/bin drone-runner-exec
+          sudo mkdir -p ~/.drone-runner-exec
+          printf "DRONE_RPC_PROTO=${{ secrets.DRONE_RPC_PROTO }}\nDRONE_RPC_HOST=${{ secrets.DRONE_RPC_HOST }}\nDRONE_RPC_SECRET=${{ secrets.DRONE_RPC_SECRET }}\n" | sudo tee ~/.drone-runner-exec/config
+          # drone-runner-exec service install
+          # drone-runner-exec service start
+          sudo drone-runner-exec daemon ~/.drone-runner-exec/config
       - name: Run drone/drone-runner-exec-darwin-amd64@shell
         if: matrix.os == 'macos-latest'
         run: |
