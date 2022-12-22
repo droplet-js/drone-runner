@@ -11,7 +11,7 @@ jobs:
       matrix:
         os: [windows-latest, ubuntu-latest, macos-latest]
         # os: [ubuntu-latest]
-    # container:
+    container: alpine:latest
     #   image: drone/drone-runner-docker:1.8.2
     #   env:
     #     DRONE_RPC_PROTO: ${{ secrets.DRONE_RPC_PROTO }}
@@ -22,6 +22,8 @@ jobs:
     steps:
       - name: Run drone/drone-runner-docker@shell
         run: |
+          ls /var/run/
+          env
           docker run \
             --volume=/var/run/docker.sock:/var/run/docker.sock \
             --env=DRONE_RPC_PROTO=${{ secrets.DRONE_RPC_PROTO }} \
